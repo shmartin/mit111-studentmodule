@@ -12,7 +12,7 @@ It will contain the Student Module where students can upload their papers and ar
 
 The website will contain different submodules for this single module to function correctly.
 
-- Login
+- Login/Sign Up
 - User Page
 - Notification system
 - Progress reporting
