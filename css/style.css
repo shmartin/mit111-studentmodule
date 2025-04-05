@@ -86,3 +86,14 @@
   .extra-links a:hover {
     color: #4CAF50;
   }
+.logo {
+    text-align: center; /* Center the logo within the logo div */
+    margin-bottom: 20px; /* Add some space below the logo */
+}
+.logo img {
+    max-width: 80%; /* 80% of the login-box width */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /*removes extra space below image*/
+    margin-left: auto;
+    margin-right: auto;
+}
