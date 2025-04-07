@@ -4,27 +4,85 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/signup-style.css">
 </head>
 <body>
-    <div class="signup-container">
-        <h1>Create an Account</h1>
-        <form id="signupForm">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" placeholder="Choose a username" required>
-
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" placeholder="Enter your email" required>
-
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" placeholder="Create a password" required>
-
-            <label for="confirmPassword">Confirm Password:</label>
-            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required>
-
+    <div class="signup-form">
+        <h2>Create an account</h2>
+        <form>
+            <div class="form-group">
+                <label for="name">Username</label>
+                <div class="input-wrapper">
+                    <input type="text" id="name" placeholder="Choose your username" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email</label>
+                <div class="input-wrapper">
+                    <input type="email" id="email" placeholder="Enter your email" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="input-wrapper">
+                    <input type="password" id="password" placeholder="Create a password" required>
+                    <button type="button" class="toggle-password" id="togglePassword">
+                        <i class="far fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="confirm-password">Confirm Password</label>
+                <div class="input-wrapper">
+                    <input type="password" id="confirm-password" placeholder="Confirm your password" required>
+                    <span id="password-match-message" class="password-match"></span>
+                </div>
+            </div>
+            
             <button type="submit">Sign Up</button>
+            <p>Already have an account? <a href="login.html">Log in</a></p>
         </form>
-        <p>Already have an account? <a href="login.html">Log in</a></p>
     </div>
+
+    <script>
+        const togglePassword = document.getElementById('togglePassword');
+        const password = document.getElementById('password');
+        const confirmPassword = document.getElementById('confirm-password');
+        const eyeIcon = togglePassword.querySelector('i');
+        const passwordMatchMessage = document.getElementById('password-match-message');
+        
+        // Toggle password visibility 
+        togglePassword.addEventListener('click', function() {
+            // Toggle the type attribute for both fields
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            confirmPassword.setAttribute('type', type);
+            
+            // Toggle icon
+            eyeIcon.classList.toggle('fa-eye');
+            eyeIcon.classList.toggle('fa-eye-slash');
+        });
+        
+        // Check password match on input
+        confirmPassword.addEventListener('input', function() {
+            if (password.value && confirmPassword.value) {
+                if (password.value === confirmPassword.value) {
+                    passwordMatchMessage.textContent = 'Passwords match!';
+                    passwordMatchMessage.className = 'password-match match';
+                    passwordMatchMessage.style.display = 'block';
+                } else {
+                    passwordMatchMessage.textContent = 'Passwords do not match';
+                    passwordMatchMessage.className = 'password-match no-match';
+                    passwordMatchMessage.style.display = 'block';
+                }
+            } else {
+                passwordMatchMessage.style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>
