@@ -8,6 +8,93 @@
 <body>
     <header>
         <div class="logo-container">
+        <image src="../SAS Logo.png" alt="Institution Logo" class="logo" />
+        <strong class="institution-name">SCHOOL OF ADVANCED STUDIES</strong>
+        </div>
+        <nav>
+          <a href="submission-page.html">Home</a>
+          <a href="#">Guidelines</a>
+          <a href="#">Help</a>
+        </nav>
     </header>
+    <div class="container">
+    <div class="welcome">
+      <h2>👋 Welcome, <span id="studentName">Student Name</span>!</h2>
+    </div>
+    <div class="actions">
+      <button>Submit a New Research Paper</button>
+      <button>View Submission History</button>
+    </div>
+    <div class="panel">
+      <h3>📝 Submit a New Research Paper</h3>
+      <div class="form-group">
+        <label>Title:</label>
+        <input type="text">
+      </div>
+    <div class="form-group">
+        <label>Abstract:</label>
+        <textarea rows="4"></textarea>
+    </div>
+        <div class="form-group">
+        <label>Authors' Names:</label>
+        <input type="text">
+    </div>
+    <div class="form-group">
+        <label>Category/Field of Study:</label>
+        <select>
+          <option>Computer Science</option>
+          <option>Engineering</option>
+          <option>Social Sciences</option>
+          <!-- more categories -->
+        </select>
+      </div>
+    <div class="form-group">
+        <label>Upload File (PDF/DOC):</label>
+        <input type="file">
+    </div>
+        <button class="action-btn">Submit Research Paper</button>
+    </div>
+    <div class="status">
+      <h3>📊 My Submissions</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Paper Title</th>
+            <th>Status</th>
+            <th>Last Updated</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+    <tbody>
+          <tr>
+            <td>Research Title 1</td>
+            <td><span class="badge under-review">Under Review</span></td>
+            <td>Apr 10, 2025</td>
+            <td><button class="action-btn">View</button></td>
+          </tr>
+          <tr>
+            <td>Research Title 2</td>
+            <td><span class="badge revision">Revision Required</span></td>
+            <td>Apr 08, 2025</td>
+            <td><button class="action-btn">Resubmit</button></td>
+          </tr>
+          <tr>
+            <td>Research Title 3</td>
+            <td><span class="badge accepted">Accepted</span></td>
+            <td>Mar 22, 2025</td>
+            <td><button class="action-btn">Download</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="notifications">
+      <h3>🔔 Recent Notifications</h3>
+      <ul>
+        <li>📢 Revisions requested for "Urban Parking Study"</li>
+        <li>✅ "Data Privacy Survey" has been accepted</li>
+        <li>📬 Feedback available for "AI in Energy"</li>
+      </ul>
+    </div>
+  </div>
 </body>
 </html>
