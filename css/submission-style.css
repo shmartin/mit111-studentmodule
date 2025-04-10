@@ -14,10 +14,18 @@
       align-items: center;
     }
     .institution-name {
-    font-size: 25px;
+    font-size: 30px;
     font-weight: bold;
     color: orange;
     }
+   .institution-name span {
+     display: block;
+   }
+   .university-name {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+   }
     nav a {
       color: white;
       margin-left: 1.5rem;
