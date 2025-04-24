@@ -17,3 +17,12 @@ The website will contain different submodules for this single module to function
 - Notification system
 - Progress reporting
 - File management of uploaded papers
+
+
+## Ongoing Updates
+
+- Update website to be inline with database columns
+- find way to get notifications to website
+- find way to save file with file path in database
+- create database within django
+- create extra table for abstract of document
