@@ -1,0 +1,98 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+  Submission
+{% endblock %}
+
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/submission.css' %}">
+{% endblock %}
+
+{% block content %}
+    <header>
+        <div class="logo-container">
+        <image src="../../static/images/SAS Logo.png" alt="Institution Logo" class="logo" />
+        <div class="institution-name">
+          <span>SCHOOL OF ADVANCED STUDIES</span>
+          <span class="university-name">Saint Louis University, Baguio City</span>
+        </div>
+        </div>
+        <nav>
+          <a href="submission-page.html">Home</a>
+          <a href="#">Guidelines</a>
+          <a href="#">Help</a>
+        </nav>
+    </header>
+    <div class="container">
+    <div class="welcome">
+      <h2>👋 Welcome, <span id="studentName">Student Name</span>!</h2>
+    </div>
+    <div class="actions">
+      <button>Submit a New Research Paper</button>
+      <button>View Submission History</button>
+    </div>
+    <div class="panel">
+      <h3>📝 Submit a New Research Paper</h3>
+      <div class="form-group">
+        <label>Title:</label>
+        <input type="text">
+      </div>
+    <div class="form-group">
+        <label>Abstract:</label>
+        <textarea rows="4"></textarea>
+    </div>
+        <div class="form-group">
+        <label>Authors' Names:</label>
+        <input type="text">
+    </div>
+    <div class="form-group">
+        <label>Category/Field of Study:</label>
+        <select>
+          <option>Computer Science</option>
+          <option>Engineering</option>
+          <option>Social Sciences</option>
+          <!-- more categories -->
+        </select>
+      </div>
+    <div class="form-group">
+        <label>Upload File (PDF/DOC):</label>
+        <input type="file">
+    </div>
+        <button class="action-btn">Submit Research Paper</button>
+    </div>
+    <div class="status">
+      <h3>📊 My Submissions</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Paper Title</th>
+            <th>Status</th>
+            <th>Last Updated</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+    <tbody>
+          {% for i in documents %}
+          <tr>
+            <td>{{ i.dtitle }}</td>
+            <td><span class="badge under-review">Under Review</span></td>
+            <td>Apr 10, 2025</td>
+            <td><button class="action-btn">View</button></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="notifications">
+      <h3>🔔 Recent Notifications</h3>
+      <ul>
+        <li>📢 Revisions requested for "Research Title 2"</li>
+        <li>✅ "Research Title 3" has been accepted</li>
+        <li>📬 Feedback available for "Research Title 1"</li>
+      </ul>
+    </div>
+  </div>
+
+{% endblock %}
