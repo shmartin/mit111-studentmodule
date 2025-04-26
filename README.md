@@ -19,10 +19,10 @@ The website will contain different submodules for this single module to function
 - File management of uploaded papers
 
 
-## Ongoing Updates
+## TODO
 
-- Update website to be inline with database columns
-- find way to get notifications to website
-- find way to save file with file path in database
-- create database within django
-- create extra table for abstract of document
+- [ ] Update website to be inline with database columns
+- [ ] Find way to get notifications to website
+- [ ] Find way to save file with file path in database
+- [ ] Create database within django
+- [ ] Create extra table for abstract of document
