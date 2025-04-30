@@ -24,5 +24,6 @@ The website will contain different submodules for this single module to function
 - [ ] Update website to be inline with database columns
 - [ ] Find way to get notifications to website
 - [ ] Find way to save file with file path in database
-- [ ] Create database within django
+- [X] Create database within django
+    - [ ] Create authentication system
 - [ ] Create extra table for abstract of document
