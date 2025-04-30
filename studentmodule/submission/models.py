@@ -1,4 +1,5 @@
 from django.db import models
+from users.models import User, Program
 
 # Create your models here.
 
@@ -12,7 +13,7 @@ class Document(models.Model):
 
 class Document_detail(models.Model):
     did = models.ForeignKey(Document, on_delete=models.CASCADE)
-    dauthor = models.Foreignkey(User, on_delete=models.CASCADE)
+    dauthor = models.ForeignKey(User, on_delete=models.CASCADE)
     dadviser = models.CharField(max_length=100)
     program = models.ForeignKey(Program, on_delete=models.CASCADE)
 
@@ -21,7 +22,7 @@ class Document_detail(models.Model):
 
 class Document_evaluation(models.Model):
     did = models.ForeignKey(Document, on_delete=models.CASCADE)
-    dauthor = models.Foreignkey(User, on_delete=models.CASCADE)
+    dauthor = models.ForeignKey(User, on_delete=models.CASCADE)
     feedback = models.CharField(max_length=255)
     status = models.CharField(max_length=50)
 
