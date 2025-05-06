@@ -86,15 +86,15 @@
               {% if i.status == 'Under Review'%}
                 <td><span class="badge under-review">Under Review</span></td>
                 <td>Apr 10, 2025</td>
-                <td><button class="action-btn">View</button></td>
+                <td><button class="badge under-review">View</button></td>
               {% elif i.status == 'Revision Required' %}
                 <td><span class="badge revision">Revision Required</span></td>
                 <td>Apr 10, 2025</td>
-                <td><button class="action-btn">Resubmit</button></td>
+                <td><button class="badge revision">Resubmit</button></td>
               {% elif i.status == 'Accepted' %}
                 <td><span class="badge accepted">Accepted</span></td>
                 <td>Apr 10, 2025</td>
-                <td><button class="action-btn">Download</button></td>
+                <td><button class="badge accepted">Download</button></td>
               {% endif %}
             </tr>
           {% endfor %}
