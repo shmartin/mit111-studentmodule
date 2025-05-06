@@ -27,7 +27,7 @@ class Document_evaluation(models.Model):
     status = models.CharField(max_length=50)
 
     def __str__(self):
-        return f'{self.did} | {self.status}'
+        return f'{self.status} | {self.did}'
 
 
 # title = foreignkey(docuement.title)
