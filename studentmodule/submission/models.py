@@ -28,3 +28,11 @@ class Document_evaluation(models.Model):
 
     def __str__(self):
         return f'{self.did} | {self.status}'
+
+
+# title = foreignkey(docuement.title)
+# file_path
+
+# did = foreignkey(document)
+# ddid = foreignkey(Document_details)
+# deid = foreignkey(document_evaluation)
