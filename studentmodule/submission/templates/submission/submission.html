@@ -85,15 +85,15 @@
               <td>{{ i.did.dtitle }}</td>
               {% if i.status == 'Under Review'%}
                 <td><span class="badge under-review">Under Review</span></td>
-                <td>Apr 10, 2025</td>
+                <td>how???</td>
                 <td><button class="badge under-review">View</button></td>
               {% elif i.status == 'Revision Required' %}
                 <td><span class="badge revision">Revision Required</span></td>
-                <td>Apr 10, 2025</td>
+                <td>how???</td>
                 <td><button class="badge revision">Resubmit</button></td>
               {% elif i.status == 'Accepted' %}
                 <td><span class="badge accepted">Accepted</span></td>
-                <td>Apr 10, 2025</td>
+                <td>how???</td>
                 <td><button class="badge accepted">Download</button></td>
               {% endif %}
             </tr>
@@ -104,9 +104,15 @@
     <div class="notifications">
       <h3>🔔 Recent Notifications</h3>
       <ul>
-        <li>📢 Revisions requested for "Research Title 2"</li>
-        <li>✅ "Research Title 3" has been accepted</li>
-        <li>📬 Feedback available for "Research Title 1"</li>
+        {% for i in doc_eval %}
+          {% if i.status == 'Under Review'%}
+            <li>📬 <span class="badge under-review">Feedback</span> available for "{{ i.did.dtitle }}"</li>
+          {% elif i.status == 'Revision Required' %}
+            <li>📢 <span class="badge revision">Revisions</span> requested for "{{ i.did.dtitle }}"</li>
+          {% elif i.status == 'Accepted' %}
+            <li>✅ "{{ i.did.dtitle }}" has been <span class="badge accepted">accepted</span></li>
+          {% endif %}
+        {% endfor %}
       </ul>
     </div>
   </div>

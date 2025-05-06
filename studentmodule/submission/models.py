@@ -36,3 +36,4 @@ class Document_evaluation(models.Model):
 # did = foreignkey(document)
 # ddid = foreignkey(Document_details)
 # deid = foreignkey(document_evaluation)
+# date = date_now **when was the evaluation submitted/updated
