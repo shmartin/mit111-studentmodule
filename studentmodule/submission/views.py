@@ -17,3 +17,6 @@ def submission(request):
     context['doc_detail'] = doc_details
     context['doc_eval'] = doc_eval
     return render(request, 'submission/submission.html', context)
+
+def guidlines(request):
+    return render(request, 'submission/guidelines.html', context)

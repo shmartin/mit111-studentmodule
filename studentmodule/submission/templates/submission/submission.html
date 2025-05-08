@@ -26,6 +26,20 @@
         </nav>
     </header>
     <div class="container">
+    <div class="notifications">
+      <h3>🔔 Recent Notifications</h3>
+      <ul>
+        {% for i in doc_eval %}
+          {% if i.status == 'Under Review'%}
+            <li>📬 <span class="badge under-review">Feedback</span> available for "{{ i.did.dtitle }}"</li>
+          {% elif i.status == 'Revision Required' %}
+            <li>📢 <span class="badge revision">Revisions</span> requested for "{{ i.did.dtitle }}"</li>
+          {% elif i.status == 'Accepted' %}
+            <li>✅ "{{ i.did.dtitle }}" has been <span class="badge accepted">accepted</span></li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
     <div class="welcome">
       <h2>👋 Welcome, <span id="studentName">{{ request.user }}</span>!</h2>
     </div>
@@ -100,20 +114,6 @@
           {% endfor %}
         </tbody>
       </table>
-    </div>
-    <div class="notifications">
-      <h3>🔔 Recent Notifications</h3>
-      <ul>
-        {% for i in doc_eval %}
-          {% if i.status == 'Under Review'%}
-            <li>📬 <span class="badge under-review">Feedback</span> available for "{{ i.did.dtitle }}"</li>
-          {% elif i.status == 'Revision Required' %}
-            <li>📢 <span class="badge revision">Revisions</span> requested for "{{ i.did.dtitle }}"</li>
-          {% elif i.status == 'Accepted' %}
-            <li>✅ "{{ i.did.dtitle }}" has been <span class="badge accepted">accepted</span></li>
-          {% endif %}
-        {% endfor %}
-      </ul>
     </div>
   </div>
 
