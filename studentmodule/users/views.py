@@ -14,7 +14,7 @@ def custom_login_view(request):
         
         if user is not None:
             auth_login(request, user)
-            return redirect('home')  # Redirect to homepage or dashboard
+            return redirect('submission')  # Redirect to submission page
         else:
             return render(request, 'users/login.html', {'error': 'Invalid credentials'})
     
