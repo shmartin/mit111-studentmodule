@@ -1,102 +1,144 @@
- {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  /* Body Styling */
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  
-  /* Login Box Styling */
-  .login-box {
-    background-color: #a084ee;
-    padding: 30px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    width: 300px;
-    text-align: center;
-  }
-  
-  h2 {
-    margin-bottom: 20px;
-    color: #333;
-  }
-  
-  .lock-icon {
-    font-size: 50px;
-    margin-bottom: 15px;
-    color: #4CAF50;
-  }
-  
-  /* Input Group Styling */
-  .input-group {
-    margin-bottom: 20px;
-    text-align: left;
-  }
-  
-  .input-group label {
-    font-size: 14px;
-    color: #555;
-  }
-  
-  .input-group input {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    box-sizing: border-box;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-top: 5px;
-  }
-  
-  /* Button Styling */
-  button {
-    width: 100%;
-    padding: 10px;
-    background-color: #4CAF50;
-    color: white;
-    font-size: 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  button:hover {
-    background-color: #45a049;
-  }
-  
-  /* Extra Links Styling */
-  .extra-links {
-    margin-top: 10px;
-    font-size: 14px;
-  }
-  
-  .extra-links a {
-    text-decoration: none;
-    color: #555;
-    transition: color 0.3s ease;
-  }
-  .extra-links a:hover {
-    color: #4CAF50;
-  }
+ /* General Reset and Base */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f5f7fa;
+  color: #333;
+}
+
+/* Header */
+header {
+  background-color: #003366;
+  color: white;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
 .logo {
-    text-align: center; /* Center the logo within the logo div */
-    margin-bottom: 20px; /* Add some space below the logo */
+  height: 60px;
+  margin-right: 15px;
 }
-.logo img {
-    max-width: 80%; /* 80% of the login-box width */
-    height: auto; /* Maintain aspect ratio */
-    display: block; /*removes extra space below image*/
-    margin-left: auto;
-    margin-right: auto;
+
+.institution-name {
+  display: flex;
+  flex-direction: column;
 }
+
+.institution-name span {
+  font-size: 16px;
+}
+
+.university-name {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+nav a {
+  color: white;
+  margin-left: 20px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* Login Box */
+.login-box {
+  background: white;
+  padding: 40px;
+  width: 350px;
+  max-width: 90%;
+  margin: 60px auto;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.lock-icon {
+  font-size: 40px;
+  margin-bottom: 10px;
+  color: #003366;
+}
+
+h2 {
+  margin-bottom: 25px;
+  color: #003366;
+}
+
+/* Input Fields */
+.input-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+
+.input-group label {
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+.input-group input {
+  border: none;
+  background: transparent;
+  outline: none;
+  width: 100%;
+  font-size: 16px;
+}
+
+/* Button */
+button[type="submit"] {
+  background-color: #003366;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #00509e;
+}
+
+/* Extra Links */
+.extra-links {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.extra-links a {
+  color: #003366;
+  text-decoration: none;
+}
+
+.extra-links a:hover {
+  text-decoration: underline;
+}
+
+/* Error Messages */
+.error {
+  background-color: #ffe0e0;
+  border: 1px solid #ff4d4d;
+  padding: 10px;
+  margin-bottom: 15px;
+  color: #990000;
+  border-radius: 5px;
+}
+
 
 
