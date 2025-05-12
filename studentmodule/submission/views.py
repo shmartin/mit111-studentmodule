@@ -60,3 +60,6 @@ def submission(request):
 
 def guidelines(request):
     return render(request, 'submission/guidelines.html', context)
+
+def help(request):
+    return render(request, 'submission/help.html')
