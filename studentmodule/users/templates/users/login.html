@@ -1,35 +1,47 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | Student Module</title>
-    <link rel="stylesheet" href="../css/login-style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Login</title>
+  <link rel="stylesheet" href="{% static 'css/login-styles.css' %}" />
 </head>
 <body>
-   <!-- Login Box Section -->
-  <div class="login-box">
-    <!-- Logo at the top -->
-    <div class="logo">
-      <img src="../images/logo.png" alt="Logo">
+  <header>
+    <div class="logo-container">
+      <img src="{% static 'images/SAS Logo.png' %}" alt="Institution Logo" class="logo" />
+      <div class="institution-name">
+        <span>SCHOOL OF ADVANCED STUDIES</span>
+        <span class="university-name">Saint Louis University, Baguio City</span>
+      </div>
     </div>
+  </header>
+
+  <div class="login-box">
     <div class="lock-icon">🔒</div>
     <h2>User Login</h2>
-    <form action="#" method="POST" id="loginForm">
+    <form method="POST" action="{% url 'login' %}">
+      {% csrf_token %}
+      {% if form.errors %}
+        <div class="error">{{ form.errors }}</div>
+      {% endif %}
       <div class="input-group">
-        <label for="idnumber">👤</label>
-        <input type="text" id="idnumber" name="idnumber" placeholder="ID Number" required>
+        <label for="username">👤</label>
+        <input type="text" id="username" name="username" placeholder="ID Number" required />
       </div>
       <div class="input-group">
         <label for="password">🔑</label>
-        <input type="password" id="password" name="password" placeholder="Password" required>
+        <input type="password" id="password" name="password" placeholder="Password" required />
       </div>
       <button type="submit">Login</button>
     </form>
     <div class="extra-links">
-      <a href="#">Forgot Password?</a><br>
-      <a href="signup.html">- Account Request</a>
+      <a href="{% url 'password_reset' %}">Forgot Password?</a><br />
+      <a href="{% url 'signup' %}">- Account Request</a>
     </div>
   </div>
 </body>
 </html>
+
+
