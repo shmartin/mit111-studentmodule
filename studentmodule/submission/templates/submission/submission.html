@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block title %}
-  Submission
+    Submission
 {% endblock %}
 
 {% load static %}
@@ -13,7 +13,7 @@
 {% block content %}
     <header>
         <div class="logo-container">
-        <image src="../../static/images/SAS Logo.png" alt="Institution Logo" class="logo" />
+        <img src="{% static 'images/SAS Logo.png' %}" alt="Institution Logo" class="logo" />
         <div class="institution-name">
           <span>SCHOOL OF ADVANCED STUDIES</span>
           <span class="university-name">Saint Louis University, Baguio City</span>
@@ -23,74 +23,63 @@
            <a href="{% url 'submission' %}">Home</a>
            <a href="{% url 'guidelines' %}">Guidelines</a>
            <a href="{% url 'help' %}">Help</a>
+           <a href="{% url 'logout' %}">Logout</a>
         </nav>
     </header>
     <div class="container">
-      
+
       {% if messages %}
       <ul class="messages">
-        {% for messages in messages %}
-          <li class="{{ message.tags }}">{{ message }}</li>li>
+        {% for message in messages %}
+          <li class="{{ message.tags }}">{{ message }}</li>
         {% endfor %}
       </ul>
       {% endif %}
-    
+
       <div class="notifications">
       <h3>🔔 Recent Notifications</h3>
       <ul>
-        {% for i in doc_eval %}
-          {% if i.status == 'Under Review'%}
-            <li>📬 <span class="badge under-review">Feedback</span> available for "{{ i.did.dtitle }}"</li>
-          {% elif i.status == 'Revision Required' %}
-            <li>📢 <span class="badge revision">Revisions</span> requested for "{{ i.did.dtitle }}"</li>
-          {% elif i.status == 'Accepted' %}
-            <li>✅ "{{ i.did.dtitle }}" has been <span class="badge accepted">accepted</span></li>
+        {% for evaluation in doc_eval %}
+          {% if evaluation.status == 'Under Review'%}
+            <li>📬 <span class="badge under-review">Feedback</span> available for "{{ evaluation.did.dtitle }}"</li>
+          {% elif evaluation.status == 'Revision Required' %}
+            <li>📢 <span class="badge revision">Revisions</span> requested for "{{ evaluation.did.dtitle }}"</li>
+          {% elif evaluation.status == 'Accepted' %}
+            <li>✅ "{{ evaluation.did.dtitle }}" has been <span class="badge accepted">accepted</span></li>
           {% endif %}
         {% endfor %}
       </ul>
     </div>
     <div class="welcome">
-      <h2>👋 Welcome, <span id="studentName">{{ request.user }}</span>!</h2>
-    </div>
+      <h2>👋 Welcome, <span id="studentName">{{ request.user.firstname }} {{ request.user.lastname }}</span>!</h2>
     <form method="POST" enctype="multipart/form-data">
       {% csrf_token %}
       <div class="actions">
         <button type="button">Submit a New Research Paper</button>
         <button type="button">View Submission History</button>
       </div>
-      
+
       <div class="panel">
         <h3>📝 Submit a New Research Paper</h3>
         <div class="form-group">
-          <label>Title:</label>
-          <input type="text" name="title" required>
+          <label for="title">Title:</label>
+          <input type="text" id="title" name="dtitle" required>
+      </div>
+      
+      <div class="form-group">
+          <label for="adviser">Adviser:</label>
+          <input type="text" id="adviser" name="dadviser" required>
       </div>
       <div class="form-group">
-          <label>Abstract:</label>
-          <textarea rows="4" name="abstract" required></textarea>
-      </div>
-          <div class="form-group">
-          <label>Authors' Names:</label>
-          <input type="text" name="authors" required>
-      </div>
-          <div class="form-group">
-          <label>Adviser:</label>
-          <input type="text" name="adviser" required>
+        <label for="program">Program/Degree:</label>
+        <input type="program" name="program" required>
       </div>
       <div class="form-group">
-          <label>Category/Field of Study:</label>
-          <select name="category" required>
-            <option>Computer Science</option>
-            <option>Engineering</option>
-            <option>Social Sciences</option>
-            <!-- more categories -->
-          </select>
-      </div>
-      <div class="form-group">
-          <label>Upload File (PDF/DOC/DOCX):</label>
-          <input type="file" name="paper_file" id="paper_file" accept=".pdf,.doc,.docx" required>
+          <label for="file_path">Upload File (PDF/DOC/DOCX):</label>
+          <input type="file" name="file_path" id="file_path" accept=".pdf,.doc,.docx" required>
           <small id="fileError" style="color: red; display: none;">Invalid file. Only PDF, DOC, or DOCX under 20MB allowed.</small>
       </div>
+
       <button type="submit" class="action-btn">Submit Research Paper</button>
       </div>
     </form>
@@ -101,26 +90,25 @@
           <tr>
             <th>Paper Title</th>
             <th>Status</th>
-            <th>Last Updated</th>
             <th>Action</th>
           </tr>
         </thead>
     <tbody>
-          {% for i in doc_eval %}
+          {% for evaluation in doc_eval %}
             <tr>
-              <td>{{ i.did.dtitle }}</td>
-              {% if i.status == 'Under Review'%}
+              <td>{{ evaluation.did.dtitle }}</td>
+              {% if evaluation.status == 'Under Review'%}
                 <td><span class="badge under-review">Under Review</span></td>
-                <td>{{ i.updated_at }}</td>
-                <td><button class="badge under-review">View</button></td>
-              {% elif i.status == 'Revision Required' %}
+                {# Removed updated_at display #}
+                <td><button class="badge under-review">View</button></td> {# Action button based on status #}
+              {% elif evaluation.status == 'Revision Required' %}
                 <td><span class="badge revision">Revision Required</span></td>
-                <td>{{ i.updated_at }}</td>
-                <td><button class="badge revision">Resubmit</button></td>
-              {% elif i.status == 'Accepted' %}
+                {# Removed updated_at display #}
+                <td><button class="badge revision">Resubmit</button></td> {# Action button based on status #}
+              {% elif evaluation.status == 'Accepted' %}
                 <td><span class="badge accepted">Accepted</span></td>
-                <td>{{ i.updated_at }}</td>
-                <td><button class="badge accepted">Download</button></td>
+                {# Removed updated_at display #}
+                <td><button class="badge accepted">Download</button></td> {# Action button based on status #}
               {% endif %}
             </tr>
           {% endfor %}
@@ -129,7 +117,7 @@
     </div>
   </div>
 <script>
-document.getElementById("paper_file").addEventListener("change", function () {
+document.getElementById("file_path").addEventListener("change", function () {
     const file = this.files[0];
     const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
     const maxSize = 20 * 1024 * 1024; // 20MB
