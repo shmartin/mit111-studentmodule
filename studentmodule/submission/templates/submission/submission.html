@@ -21,7 +21,7 @@
         </div>
         <nav>
            <a href="{% url 'submission' %}">Home</a>
-           <a href="{% url 'submission_guidelines' %}">Guidelines</a>
+           <a href="{% url 'guidelines' %}">Guidelines</a>
            <a href="#">Help</a>
         </nav>
     </header>
@@ -52,32 +52,34 @@
     <div class="welcome">
       <h2>👋 Welcome, <span id="studentName">{{ request.user }}</span>!</h2>
     </div>
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
       <div class="actions">
-        <button>Submit a New Research Paper</button>
-        <button>View Submission History</button>
+        <button type="button">Submit a New Research Paper</button>
+        <button type="button">View Submission History</button>
       </div>
+      
       <div class="panel">
         <h3>📝 Submit a New Research Paper</h3>
         <div class="form-group">
           <label>Title:</label>
-          <input type="text">
+          <input type="text" name="title" required>
       </div>
       <div class="form-group">
           <label>Abstract:</label>
-          <textarea rows="4"></textarea>
+          <textarea rows="4" name="abstract" required></textarea>
       </div>
           <div class="form-group">
           <label>Authors' Names:</label>
-          <input type="text">
+          <input type="text" name="authors" required>
       </div>
           <div class="form-group">
           <label>Adviser:</label>
-          <input type="text">
+          <input type="text" name="adviser" required>
       </div>
       <div class="form-group">
           <label>Category/Field of Study:</label>
-          <select>
+          <select name="category" required>
             <option>Computer Science</option>
             <option>Engineering</option>
             <option>Social Sciences</option>
@@ -89,7 +91,7 @@
           <input type="file" name="paper_file" id="paper_file" accept=".pdf,.doc,.docx" required>
           <small id="fileError" style="color: red; display: none;">Invalid file. Only PDF, DOC, or DOCX under 20MB allowed.</small>
       </div>
-          <button class="action-btn">Submit Research Paper</button>
+      <button type="submit" class="action-btn">Submit Research Paper</button>
       </div>
     </form>
     <div class="status">
@@ -109,15 +111,15 @@
               <td>{{ i.did.dtitle }}</td>
               {% if i.status == 'Under Review'%}
                 <td><span class="badge under-review">Under Review</span></td>
-                <td>how???</td>
+                <td>{{ i.updated_at }}</td>
                 <td><button class="badge under-review">View</button></td>
               {% elif i.status == 'Revision Required' %}
                 <td><span class="badge revision">Revision Required</span></td>
-                <td>how???</td>
+                <td>{{ i.updated_at }}</td>
                 <td><button class="badge revision">Resubmit</button></td>
               {% elif i.status == 'Accepted' %}
                 <td><span class="badge accepted">Accepted</span></td>
-                <td>how???</td>
+                <td>{{ i.updated_at }}</td>
                 <td><button class="badge accepted">Download</button></td>
               {% endif %}
             </tr>
