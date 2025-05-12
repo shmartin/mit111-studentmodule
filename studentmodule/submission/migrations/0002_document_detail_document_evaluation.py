@@ -12,24 +12,23 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.CreateModel(
-            name='Document_detail',
+       migrations.CreateModel(
+            name='DocumentDetails',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('did', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, primary_key=True, serialize=False, to='submission.document')),
                 ('dadviser', models.CharField(max_length=100)),
-                ('dauthor', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='users.user')),
-                ('did', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='submission.document')),
-                ('program', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='users.program')),
+                ('dauthor', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='submission.users')),
+                ('program', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='submission.program')),
             ],
         ),
         migrations.CreateModel(
-            name='Document_evaluation',
+            name='DocumentEvaluation',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('feedback', models.CharField(max_length=255)),
                 ('status', models.CharField(max_length=50)),
-                ('dauthor', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='users.user')),
                 ('did', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='submission.document')),
+                ('dauthor', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='submission.users')),
             ],
         ),
     ]
