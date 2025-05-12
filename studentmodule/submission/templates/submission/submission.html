@@ -26,7 +26,16 @@
         </nav>
     </header>
     <div class="container">
-    <div class="notifications">
+      
+      {% if messages %}
+      <ul class="messages">
+        {% for messages in messages %}
+          <li class="{{ message.tags }}">{{ message }}</li>li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    
+      <div class="notifications">
       <h3>🔔 Recent Notifications</h3>
       <ul>
         {% for i in doc_eval %}
@@ -76,8 +85,9 @@
           </select>
       </div>
       <div class="form-group">
-          <label>Upload File (PDF/DOC):</label>
-          <input type="file">
+          <label>Upload File (PDF/DOC/DOCX):</label>
+          <input type="file" name="paper_file" id="paper_file" accept=".pdf,.doc,.docx" required>
+          <small id="fileError" style="color: red; display: none;">Invalid file. Only PDF, DOC, or DOCX under 10MB allowed.</small>
       </div>
           <button class="action-btn">Submit Research Paper</button>
       </div>
@@ -116,5 +126,19 @@
       </table>
     </div>
   </div>
+<script>
+document.getElementById("paper_file").addEventListener("change", function () {
+    const file = this.files[0];
+    const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+    const maxSize = 20 * 1024 * 1024; // 20MB
 
+    const fileError = document.getElementById("fileError");
+    if (file && (!allowedTypes.includes(file.type) || file.size > maxSize)) {
+        fileError.style.display = "block";
+        this.value = ""; // Reset file input
+    } else {
+        fileError.style.display = "none";
+    }
+});
+</script>
 {% endblock %}
