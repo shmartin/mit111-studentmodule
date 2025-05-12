@@ -1,0 +1,88 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Submission Guidelines</title>
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9fafb;
+      color: #333;
+    }
+    header {
+      background-color: #1e3a8a;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .institution-name {
+      font-size: 30px;
+      font-weight: bold;
+      color: orange;
+    }
+    .institution-name span {
+      display: block;
+    }
+    .university-name {
+      font-size: 24px;
+      font-weight: bold;
+      color: white;
+    }
+    nav a {
+      color: white;
+      margin-left: 1.5rem;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 2rem;
+    }
+    h2 {
+      margin-bottom: 1rem;
+    }
+    ul {
+      line-height: 1.8;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo-container">
+      <img src="{% static 'images/SAS Logo.png' %}" alt="Institution Logo" class="logo" style="width: 80px;" />
+      <div class="institution-name">
+        <span>SCHOOL OF ADVANCED STUDIES</span>
+        <span class="university-name">Saint Louis University, Baguio City</span>
+      </div>
+    </div>
+    <nav>
+      <a href="{% url 'student_home' %}">Home</a>
+      <a href="{% url 'submission_guidelines' %}">Guidelines</a>
+      <a href="#">Help</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h2>📄 Submission Guidelines</h2>
+    <p>Please read the following guidelines before submitting your research paper:</p>
+    <ul>
+      <li>Submit your paper in PDF or DOC/DOCX format only.</li>
+      <li>The file size must not exceed 20MB.</li>
+      <li>Make sure the paper follows the required template format.</li>
+      <li>Include all necessary sections: Title, Abstract, Methodology, Results, Conclusion, References.</li>
+      <li>Check for grammar and plagiarism before submission.</li>
+      <li>Each submission will undergo a review process before acceptance.</li>
+      <li>You may be required to revise and resubmit based on panel feedback.</li>
+      <li>For technical issues, contact the Help Desk via email or phone.</li>
+    </ul>
+  </div>
+</body>
+</html>
