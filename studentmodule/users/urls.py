@@ -6,7 +6,7 @@ urlpatterns = [
     # Login view (custom template specified)
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
 
-    # Logout view (no changes needed)
+    # Logout view
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
 
     # Password reset views (built-in Django views)
