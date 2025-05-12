@@ -1,6 +1,6 @@
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
-from .import views # Import your custom views if you have them
+from . import views # Import your custom views if you have them
 
 urlpatterns = [
     # Use Django's built-in LoginView
