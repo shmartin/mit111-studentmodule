@@ -69,6 +69,11 @@ TEMPLATES = [
         },
     },
 ]
+AUTHENTICATION_BACKENDS = [
+    # Your custom email backend
+    'users.backends.EmailBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 WSGI_APPLICATION = 'studentmodule.wsgi.application'
 
@@ -130,4 +135,4 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Use the custom User model
-AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = 'users.Users'
