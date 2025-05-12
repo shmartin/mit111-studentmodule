@@ -1,1 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="{% static 'css/signup-style.css' %}">
+</head>
+<body>
+    <div class="signup-box">
+        <h2>Create an Account</h2>
+        <form method="POST" action="{% url 'signup' %}">
+            {% csrf_token %}
+            
+            <div class="input-group">
+                <label for="username">👤 ID Number</label>
+                {{ form.username }}
+            </div>
+
+            <div class="input-group">
+                <label for="email">📧 Email</label>
+                {{ form.email }}
+            </div>
+
+            <div class="input-group">
+                <label for="password">🔑 Password</label>
+                {{ form.password }}
+            </div>
+
+            <div class="input-group">
+                <label for="confirm-password">🔒 Confirm Password</label>
+                {{ form.confirm_password }}
+            </div>
+
+            <button type="submit">Sign Up</button>
+        </form>
+        
+        <p>Already have an account? <a href="{% url 'login' %}">Log in</a></p>
+    </div>
+</body>
+</html>
 
