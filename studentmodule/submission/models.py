@@ -5,7 +5,9 @@ from users.models import User, Program
 
 class Document(models.Model):
     dtitle = models.CharField(max_length=150)
-    file_path = models.CharField(max_length=255)
+    file = models.FileField(upload_to='documents/')  # Changed from CharField to FileField
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.dtitle
@@ -16,6 +18,7 @@ class Document_detail(models.Model):
     dauthor = models.ForeignKey(User, on_delete=models.CASCADE)
     dadviser = models.CharField(max_length=100)
     program = models.ForeignKey(Program, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f'{self.did} | {self.author} | {self.dadviser}'
@@ -25,6 +28,7 @@ class Document_evaluation(models.Model):
     dauthor = models.ForeignKey(User, on_delete=models.CASCADE)
     feedback = models.CharField(max_length=255)
     status = models.CharField(max_length=50)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f'{self.status} | {self.did}'
