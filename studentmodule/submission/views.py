@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib import messages # Import the messages framework
 from .models import Document, Document_detail, Document_evaluation
 import os
 
