@@ -1,1 +1,52 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+  Help
+{% endblock %}
+
+{% load static %}
+
+{% block style %}
+  <link rel="stylesheet" href="{% static 'css/submission.css' %}">
+{% endblock %}
+
+{% block content %}
+  <header>
+    <div class="logo-container">
+      <img src="{% static 'images/SAS Logo.png' %}" alt="Institution Logo" class="logo" />
+      <div class="institution-name">
+        <span>SCHOOL OF ADVANCED STUDIES</span>
+        <span class="university-name">Saint Louis University, Baguio City</span>
+      </div>
+    </div>
+    <nav>
+      <a href="{% url 'submission' %}">Home</a>
+      <a href="{% url 'guidelines' %}">Guidelines</a>
+      <a href="{% url 'help' %}">Help</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h2>🆘 Help & Support</h2>
+    <p>Welcome to the Help Center. Here are answers to common questions about submitting research papers.</p>
+
+    <h3>📤 How to Submit a Research Paper</h3>
+    <ol>
+      <li>Go to the <strong>Submission</strong> page.</li>
+      <li>Enter the required details: title, abstract, authors, adviser, and field of study.</li>
+      <li>Upload your document in <strong>.pdf</strong> or <strong>.doc/.docx</strong> format (max size: 20MB).</li>
+      <li>Click the <strong>Submit Research Paper</strong> button.</li>
+    </ol>
+
+    <h3>🛠 Troubleshooting</h3>
+    <ul>
+      <li>Make sure your file is in the accepted format and within the size limit.</li>
+      <li>If the form does not submit, check that all fields are filled out correctly.</li>
+      <li>Try refreshing the page or using a different browser.</li>
+    </ul>
+
+    <h3>📩 Need More Help?</h3>
+    <p>If you're still having trouble, email us at <a href="mailto:support@university.edu">support@university.edu</a>.</p>
+  </div>
+{% endblock %}
 
