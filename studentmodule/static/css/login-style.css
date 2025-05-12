@@ -53,7 +53,7 @@ nav a:hover {
 }
 
 /* Login Box */
-.login-box {
+.signup-box, .login-box {
   background: white;
   padding: 40px;
   width: 350px;
