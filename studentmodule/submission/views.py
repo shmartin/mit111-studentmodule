@@ -52,14 +52,15 @@ def submission(request):
             messages.error(request, "Please upload a file before submitting.")
             return redirect('submission')
 
-    context = {}
-    context['documents'] = all_documents
-    context['doc_detail'] = doc_details
-    context['doc_eval'] = doc_eval
+   context = {
+        'documents': all_documents,
+        'doc_detail': doc_details,
+        'doc_eval': doc_eval
+    }
     return render(request, 'submission/submission.html', context)
 
 def guidelines(request):
-    return render(request, 'submission/guidelines.html', context)
+    return render(request, 'submission/guidelines.html')
 
 def help(request):
     return render(request, 'submission/help.html')
