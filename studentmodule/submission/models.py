@@ -11,6 +11,7 @@ class Users(models.Model):
     def __str__(self):
         return f"{self.firstname} {self.lastname}"
 
+
 class Program(models.Model):
     pid = models.AutoField(primary_key=True)
     description = models.CharField(max_length=150)
@@ -40,7 +41,7 @@ class Document(models.Model):
 # FOREIGN KEY (`program`) REFERENCES `program` (`pid`)
 class DocumentDetails(models.Model):
     did = models.OneToOneField(Document, on_delete=models.CASCADE, primary_key=True) # Corresponds to `did` in SQL, acts as PK
-    dauthor = models.OneToOneField(Users, on_delete=models.CASCADE, unique=True) # Corresponds to `dauthor` in SQL
+    dauthor = models.ForeignKey(Users, on_delete=models.CASCADE) # Corresponds to `dauthor` in SQL
     dadviser = models.CharField(max_length=100) # Corresponds to `dadviser` in SQL
     program = models.ForeignKey(Program, on_delete=models.CASCADE) # Corresponds to `program` in SQL
 
@@ -92,3 +93,23 @@ class DocumentReviewers(models.Model):
 # that you should have defined elsewhere in your project (e.g., in a 'users' app).
 # The placeholder models above are just for context if you don't have them yet.
 
+class SubmissionHistory(models.Model):
+    document = models.ForeignKey(Document, on_delete=models.CASCADE, related_name='submissions')
+    submission_date = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        db_table = 'submission_history'
+        verbose_name_plural = "Submission History"
+        ordering = ['-submission_date']  # Newest first
+    
+    def __str__(self):
+        return f"{self.document.dtitle} v{self.document.version} - {self.submission_date.strftime('%Y-%m-%d')}"
+    
+    # Convenience properties to access document fields directly
+    @property
+    def dtitle(self):
+        return self.document.dtitle
+    
+    @property
+    def version(self):
+        return self.document.version

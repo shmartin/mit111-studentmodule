@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.db.models import Max # Import Max for finding the maximum did
-from .models import Document, DocumentDetails, DocumentEvaluation, Program
+from .models import Document, DocumentDetails, DocumentEvaluation, Program, SubmissionHistory
 from users.models import Users
 
 # You might need to import your actual User model if it's in a different app
@@ -15,7 +15,9 @@ def submission(request):
         messages.error(request, "Please log in to access the submission page.")
         return redirect('login')
     
+    
     user_instance = Users.objects.get(pk=request.user.pk)
+
     
     # Fetch programs for the dropdown in the submission form
     programs = Program.objects.all()
@@ -79,6 +81,12 @@ def submission(request):
             # document is assigned for review or evaluated. They are not created
             # during the initial submission by the student.
 
+            # Create submission history record
+            SubmissionHistory.objects.create(
+                document=document_instance,
+            # submission_date is automatically set (auto_now_add=True)
+            )
+
             messages.success(request, "Research paper submitted successfully.")
             return redirect('submission')
 
@@ -112,6 +120,12 @@ def guidelines(request):
 def help(request):
     # You might want to fetch help content from a database or file here
     return render(request, 'submission/help.html')
+
+
+
+def submission_history(request):
+    history = SubmissionHistory.objects.all().select_related('document')
+    return render(request, 'submission/submission-history.html', {'history': history})
 
 # Example view for document detail (based on suggested URL)
 # def document_detail(request, did):
@@ -153,4 +167,16 @@ def help(request):
 #     # This is a more complex workflow and depends on your specific requirements
 #     # for handling revisions and versions.
 #     pass # Implement resubmission logic here
+
+
+from .models import Program
+
+def submission_view(request):
+    programs = Program.objects.all()  # Fetch all programs
+    context = {
+        'programs': programs,
+        # Include any other context variables as needed
+    }
+    return render(request, 'submission.html', context)
+
 

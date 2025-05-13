@@ -8,6 +8,7 @@
 
 {% block style %}
 <link rel="stylesheet" href="{% static 'css/submission.css' %}">
+
 {% endblock %}
 
 {% block content %}
@@ -55,7 +56,10 @@
     <form method="POST" enctype="multipart/form-data">
       {% csrf_token %}
       <div class="actions">
-        <button type="button">View Submission History</button>
+        <a href="{% url 'submission_history' %}">
+          <button type="button">View Submission History</button>
+        </a>
+
       </div>
 
       <div class="panel">
@@ -71,7 +75,12 @@
       </div>
       <div class="form-group">
         <label for="program">Program/Degree:</label>
-        <input type="program" name="program" required>
+        <select id="program" name="program" required>
+            <option value="">Select a Program</option>
+            {% for program in programs %}
+                <option value="{{ program.pid }}">{{ program.description }}</option>
+            {% endfor %}
+        </select>
       </div>
       <div class="form-group">
           <label for="file_path">Upload File (PDF/DOC/DOCX):</label>
@@ -130,4 +139,6 @@ document.getElementById("file_path").addEventListener("change", function () {
     }
 });
 </script>
+
+
 {% endblock %}

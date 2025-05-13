@@ -1,0 +1,180 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f6f8;
+    color: #333;
+  }
+  header {
+    background-color: #1e3a8a;
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+  .institution-name {
+  font-size: 30px;
+  font-weight: bold;
+  color: orange;
+  }
+ .institution-name span {
+   display: block;
+ }
+ .university-name {
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+ }
+  nav a {
+    color: white;
+    margin-left: 1.5rem;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .logo {
+    width: 25%;
+    height: auto;
+  }
+
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+    padding: 30px;
+    
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 25px;
+    color: #2c3e50;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 25px;
+}
+
+th {
+    text-align: left;
+    padding: 14px 12px;
+    border-bottom: 2px solid #e0e0e0;
+    font-weight: 600;
+    color: #4a5568;
+    background-color: #f7fafc;
+}
+
+th.actions-header {
+    text-align: right;
+    padding-right: 20px;
+}
+
+td {
+    padding: 14px 12px;
+    border-bottom: 1px solid #edf2f7;
+    vertical-align: middle;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr:hover td {
+    background-color: #f8fafc;
+}
+
+.file-id {
+    color: #4a5568;
+    font-weight: 500;
+    width: 80px;
+}
+
+.document-name {
+    min-width: 200px;
+}
+
+.adviser {
+    color: #4a5568;
+}
+
+.upload-date {
+    color: #718096;
+    white-space: nowrap;
+}
+
+.actions {
+    text-align: right;
+    white-space: nowrap;
+    padding-right: 20px;
+}
+
+.action-btn {
+    background: none;
+    border: none;
+    color: #4299e1;
+    cursor: pointer;
+    padding: 5px 10px;
+    margin-left: 10px;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.action-btn:hover {
+    background-color: #ebf8ff;
+}
+
+.action-btn.delete {
+    color: #e53e3e;
+}
+
+.action-btn.delete:hover {
+    background-color: #fff5f5;
+}
+
+.ellipsis {
+    max-width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+}
+
+.footer {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.remove-link {
+    color: #e53e3e;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 4px;
+}
+
+.remove-link:hover {
+    background-color: #fff5f5;
+    text-decoration: underline;
+}
+
+.file-size {
+    color: #718096;
+    font-size: 14px;
+}

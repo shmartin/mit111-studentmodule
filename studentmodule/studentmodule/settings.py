@@ -136,3 +136,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Use the custom User model
 AUTH_USER_MODEL = 'users.Users'
+
+

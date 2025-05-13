@@ -1,0 +1,72 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Submission
+{% endblock %}
+
+{% load static %}
+
+{% block style %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/Users/gerard/Desktop/mit111-studentmodule/studentmodule/static/css/submission-history-style.css">
+    <title>Upload History</title>
+</head>
+
+{% endblock %}
+
+{% block content %}
+<body>
+    <header>
+        <div class="logo-container">
+        <img src="/Users/gerard/Desktop/mit111-studentmodule/studentmodule/static/images/SAS Logo.png" alt="Institution Logo" class="logo" />
+        <div class="institution-name">
+          <span>SCHOOL OF ADVANCED STUDIES</span>
+          <span class="university-name">Saint Louis University, Baguio City</span>
+        </div>
+        </div>
+        <nav>
+           <a href="{% url 'submission' %}">Home</a>
+           <a href="{% url 'guidelines' %}">Guidelines</a>
+           <a href="{% url 'help' %}">Help</a>
+           <a href="{% url 'logout' %}">Logout</a>
+        </nav>
+    </header>
+    <div class="container">
+        <h1>Submission History</h1>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>DOCUMENT NAME</th>
+                    <th>VERSION</th>
+                    <th>UPLOAD DATE</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entry in history %}
+                <tr>
+                    <td class="document-name">
+                        <span class="ellipsis">{{ entry.document.dtitle }}</span>
+                    </td>
+                    <td class="version">{{ entry.document.version }}</td>
+                    <td class="upload-date">{{ entry.submission_date|date:"M d, Y H:i" }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3">No submissions yet</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <div class="footer">
+            <a href="#" class="remove-link">Clear All History</a>
+            <div class="file-size">Total storage used: ---- MB</div>
+        </div>
+    </div>
+</body>
+</html>
+
+{% endblock %}
