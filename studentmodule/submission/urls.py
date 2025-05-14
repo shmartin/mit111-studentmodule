@@ -1,11 +1,23 @@
 from django.urls import path
-from . import views
+from . import views # Import views from the current app
 
 urlpatterns = [
+    # URL pattern for the main submission page (will be at /submission/)
     path('', views.submission, name='submission'),
-    path('submission_history/', views.submission_history, name='submission_history'),
+
+    # URL pattern for the guidelines page (will be at /submission/guidelines/)
     path('guidelines/', views.guidelines, name='guidelines'),
+
+    # URL pattern for the help page (will be at /submission/help/)
     path('help/', views.help, name='help'),
+
+    path('documents/<int:document_pk>/', views.document_detail, name='document_detail'),
+    
+
+    # Add other URL patterns for your submission app here as needed (e.g., resubmit, download)
+    # path('resubmit/<int:document_pk>/', views.resubmit_document, name='resubmit_document'), # will be at /submission/resubmit/5/
+    # path('download/<int:document_pk>/', views.download_accepted_paper, name='download_accepted_paper'), # will be at /submission/download/5/
+]
 
     # --- Potential additional URLs based on revue.sql schema ---
     # These are suggestions for URLs you might need to manage the data
@@ -33,5 +45,4 @@ urlpatterns = [
 
     # Example: URL to view details of a specific user
     # path('users/<int:uid>/', views.user_detail, name='user_detail'),
-]
 
