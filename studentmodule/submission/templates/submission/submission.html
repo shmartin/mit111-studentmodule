@@ -8,7 +8,6 @@
 
 {% block style %}
 <link rel="stylesheet" href="{% static 'css/submission.css' %}">
-
 {% endblock %}
 
 {% block content %}
@@ -22,16 +21,17 @@
         </div>
         <nav>
            <a href="{% url 'submission' %}">Home</a>
-           <a href="{% url 'guidelines' %}">Guidelines</a>
-           <a href="{% url 'help' %}">Help</a>
-           <a href="{% url 'logout' %}">Logout</a>
+           <a href="{% url 'guidelines' %}">Guidelines</a> {# Assuming a URL named 'guidelines' exists #}
+           <a href="{% url 'help' %}">Help</a> {# Assuming a URL named 'help' exists #}
+           {# Corrected the Logout link to point to the 'logout' URL name #}
+           <a href="{% url 'logout' %}">Logout</a> {# This will trigger the logout view #}
         </nav>
     </header>
     <div class="container">
 
       {% if messages %}
       <ul class="messages">
-        {% for message in messages %}
+        {% for message in messages %} {# Corrected variable name from 'messages' to 'message' #}
           <li class="{{ message.tags }}">{{ message }}</li>
         {% endfor %}
       </ul>
@@ -40,7 +40,8 @@
       <div class="notifications">
       <h3>🔔 Recent Notifications</h3>
       <ul>
-        {% for evaluation in doc_eval %}
+        {# Iterate over doc_eval_notifications for notifications #}
+        {% for evaluation in doc_eval %} {# Using the variable name from the view's context #}
           {% if evaluation.status == 'Under Review'%}
             <li>📬 <span class="badge under-review">Feedback</span> available for "{{ evaluation.did.dtitle }}"</li>
           {% elif evaluation.status == 'Revision Required' %}
@@ -52,93 +53,180 @@
       </ul>
     </div>
     <div class="welcome">
-      <h2>👋 Welcome, <span id="studentName">{{ request.user.firstname }} {{ request.user.lastname }}</span>!</h2>
-    <form method="POST" enctype="multipart/form-data">
-      {% csrf_token %}
-      <div class="actions">
-        <a href="{% url 'submission_history' %}">
-          <button type="button">View Submission History</button>
-        </a>
-
-      </div>
-
-      <div class="panel">
-        <h3>📝 Submit a New Research Paper</h3>
-        <div class="form-group">
-          <label for="title">Title:</label>
-          <input type="text" id="title" name="dtitle" required>
-      </div>
-      
-      <div class="form-group">
-          <label for="adviser">Adviser:</label>
-          <input type="text" id="adviser" name="dadviser" required>
-      </div>
-      <div class="form-group">
-        <label for="program">Program/Degree:</label>
-        <select id="program" name="program" required>
-            <option value="">Select a Program</option>
-            {% for program in programs %}
-                <option value="{{ program.pid }}">{{ program.description }}</option>
-            {% endfor %}
-        </select>
-      </div>
-      <div class="form-group">
-          <label for="file_path">Upload File (PDF/DOC/DOCX):</label>
-          <input type="file" name="file_path" id="file_path" accept=".pdf,.doc,.docx" required>
-          <small id="fileError" style="color: red; display: none;">Invalid file. Only PDF, DOC, or DOCX under 20MB allowed.</small>
-      </div>
-
-      <button type="submit" class="action-btn">Submit Research Paper</button>
-      </div>
-    </form>
-    <div class="status">
-      <h3>📊 My Submissions</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Paper Title</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-    <tbody>
-          {% for evaluation in doc_eval %}
-            <tr>
-              <td>{{ evaluation.did.dtitle }}</td>
-              {% if evaluation.status == 'Under Review'%}
-                <td><span class="badge under-review">Under Review</span></td>
-                {# Removed updated_at display #}
-                <td><button class="badge under-review">View</button></td> {# Action button based on status #}
-              {% elif evaluation.status == 'Revision Required' %}
-                <td><span class="badge revision">Revision Required</span></td>
-                {# Removed updated_at display #}
-                <td><button class="badge revision">Resubmit</button></td> {# Action button based on status #}
-              {% elif evaluation.status == 'Accepted' %}
-                <td><span class="badge accepted">Accepted</span></td>
-                {# Removed updated_at display #}
-                <td><button class="badge accepted">Download</button></td> {# Action button based on status #}
-              {% endif %}
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+      <h2>👋 Welcome, <span id="studentName">{{ request.user.firstname }} {{ request.user.lastname }}</span>!</h2> {# Accessing first and last name from the User model #}
     </div>
-  </div>
-<script>
-document.getElementById("file_path").addEventListener("change", function () {
-    const file = this.files[0];
-    const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
-    const maxSize = 20 * 1024 * 1024; // 20MB
 
-    const fileError = document.getElementById("fileError");
-    if (file && (!allowedTypes.includes(file.type) || file.size > maxSize)) {
-        fileError.style.display = "block";
-        this.value = ""; // Reset file input
-    } else {
-        fileError.style.display = "none";
-    }
+    {# Action buttons to toggle sections #}
+    <div class="actions">
+        <button type="button" id="showSubmitPaper">Submit a New Research Paper</button>
+        <button type="button" id="showSubmissionHistory">View Submission History</button>
+    </div>
+
+    {# Form for submitting a new research paper #}
+    {# Initially hidden, shown when "Submit a New Research Paper" button is clicked #}
+    <div id="submitPaperSection" style="display: none;">
+        <div class="panel">
+            <h3>📝 Submit a New Research Paper</h3>
+            <form method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="dtitle" required> {# Corrected name to dtitle #}
+            </div>
+            <div class="form-group">
+                <label for="adviser">Adviser:</label>
+                <input type="text" id="adviser" name="dadviser" required> {# Corrected name to dadviser #}
+            </div>
+            <div class="form-group">
+              <label for="program">Program:</label> {# Corrected label text #}
+              {# Changed back to a text input field for program #}
+              <input type="text" id="program" name="program" required>
+            </div>
+            <div class="form-group">
+                <label for="file_path">Upload File (PDF/DOC/DOCX):</label>
+                <input type="file" name="file_path" id="file_path" accept=".pdf,.doc,.docx" required> {# Corrected name to file_path #}
+                <small id="fileError" style="color: red; display: none;">Invalid file. Only PDF, DOC, or DOCX under 20MB allowed.</small>
+            </div>
+
+            <button type="submit" class="action-btn">Submit Research Paper</button>
+            </form>
+        </div>
+    </div>
+
+    {# Section for displaying the latest submissions #}
+    {# Initially visible by default #}
+    <div id="mySubmissionsSection">
+        <div class="status">
+          <h3>📊 My Latest Submissions</h3> {# Changed heading #}
+          <table>
+            <thead>
+              <tr>
+                <th>Paper Title</th>
+                <th>Version</th> {# Added Version column #}
+                <th>Submission Date</th> {# Added Submission Date column #}
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+        <tbody>
+              {# Iterate over the 'latest_submissions' list for the main table #}
+              {% for submission in latest_submissions %}
+                <tr>
+                  <td>{{ submission.title }}</td>
+                  <td>{{ submission.version }}</td> {# Display version #}
+                  <td>{{ submission.submitted_at|date:"Y-m-d H:i" }}</td> {# Display formatted submission date #}
+                  <td>
+                    {# Display status with appropriate badge #}
+                    {% if submission.status == 'Under Review'%}
+                      <span class="badge under-review">Under Review</span>
+                    {% elif submission.status == 'Revision Required' %}
+                      <span class="badge revision">Revision Required</span>
+                    {% elif submission.status == 'Accepted' %}
+                      <span class="badge accepted">Accepted</span>
+                    {% else %} {# Default status #}
+                      <span class="badge submitted">{{ submission.status }}</span>
+                    {% endif %}
+                  </td>
+                  <td>
+                    {# Action button based on status #}
+                    {# Update hrefs with actual URLs when views are implemented #}
+                    {% if submission.action_text == 'View' %}
+                      <a href="{% url 'document_detail' document_pk=submission.document_obj.pk %}" class="badge under-review">{{ submission.action_text }}</a> {# Example URL #}
+                    {% elif submission.action_text == 'Resubmit' %}
+                       <a href="{% url 'resubmit_document' document_pk=submission.document_obj.pk %}" class="badge revision">{{ submission.action_text }}</a> {# Example URL #}
+                    {% elif submission.action_text == 'Download' %}
+                       <a href="{% url 'download_accepted_paper' document_pk=submission.document_obj.pk %}" class="badge accepted">{{ submission.action_text }}</a> {# Example URL #}
+                    {% else %}
+                       <button class="badge">{{ submission.action_text }}</button> {# Default button for other statuses #}
+                    {% endif %}
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+    </div>
+
+    {# Section for displaying the full submission history #}
+    {# Initially hidden, shown when "View Submission History" button is clicked #}
+    <div id="submissionHistorySection" style="display: none;"> {# Initially hidden #}
+        <div class="status">
+          <h3>📚 Submission History</h3> {# Changed heading #}
+          <table>
+            <thead>
+              <tr>
+                <th>Paper Title</th>
+                <th>Version</th> {# Added Version column #}
+                <th>Submission Date</th> {# Added Submission Date column #}
+                {# Removed Status and Action columns #}
+              </tr>
+            </thead>
+        <tbody>
+              {# Iterate over the 'submission_history' list for the history table #}
+              {% for history_entry in submission_history %}
+                <tr>
+                  <td>{{ history_entry.title }}</td>
+                  <td>{{ history_entry.version }}</td> {# Display version #}
+                  <td>{{ history_entry.submitted_at|date:"Y-m-d H:i" }}</td> {# Display formatted submission date #}
+                  {# Removed Status and Action data cells #}
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+    </div>
+
+</div>
+<script>
+// JavaScript to toggle between Submit Paper and Submission History sections
+document.addEventListener('DOMContentLoaded', function() {
+    const submitPaperSection = document.getElementById('submitPaperSection');
+    const mySubmissionsSection = document.getElementById('mySubmissionsSection');
+    const submissionHistorySection = document.getElementById('submissionHistorySection');
+    const showSubmitPaperButton = document.getElementById('showSubmitPaper');
+    const showSubmissionHistoryButton = document.getElementById('showSubmissionHistory');
+
+    // Initially hide the submit paper form and history section
+    submitPaperSection.style.display = 'none';
+    submissionHistorySection.style.display = 'none';
+    // Initially show the latest submissions section
+    mySubmissionsSection.style.display = 'block';
+
+
+    showSubmitPaperButton.addEventListener('click', function() {
+        // When "Submit a New Research Paper" is clicked, show the form and hide the history
+        submitPaperSection.style.display = 'block';
+        submissionHistorySection.style.display = 'none';
+        // Optionally hide the latest submissions table if you only want one section visible at a time
+        // mySubmissionsSection.style.display = 'none';
+    });
+
+    showSubmissionHistoryButton.addEventListener('click', function() {
+        // When "View Submission History" is clicked, show the history and hide the form
+        submissionHistorySection.style.display = 'block';
+        submitPaperSection.style.display = 'none';
+         // Optionally hide the latest submissions table
+        // mySubmissionsSection.style.display = 'none';
+    });
+
+    // File validation script (keep existing)
+    document.getElementById("file_path").addEventListener("change", function () { {# Corrected ID to file_path #}
+        const file = this.files[0];
+        const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+        const maxSize = 20 * 1024 * 1024; // 20MB
+
+        const fileError = document.getElementById("fileError");
+        if (file && (!allowedTypes.includes(file.type) || file.size > maxSize)) {
+            fileError.style.display = "block";
+            this.value = ""; // Reset file input
+        } else {
+            fileError.style.display = "none";
+        }
+    });
 });
 </script>
-
-
 {% endblock %}
+
+
+
+

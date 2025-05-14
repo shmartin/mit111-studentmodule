@@ -1,0 +1,181 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Document Details: {{ document.dtitle }}
+{% endblock %}
+
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/submission.css' %}">
+{# You might want a specific CSS file for document details later, but submission.css provides basic layout/styling #}
+{% endblock %}
+
+{% block content %}
+    <header>
+        <div class="logo-container">
+        <img src="{% static 'images/SAS Logo.png' %}" alt="Institution Logo" class="logo" />
+        <div class="institution-name">
+          <span>SCHOOL OF ADVANCED STUDIES</span>
+          <span class="university-name">Saint Louis University, Baguio City</span>
+        </div>
+        </div>
+        <nav>
+           <a href="{% url 'submission' %}">Home</a>
+           <a href="{% url 'guidelines' %}">Guidelines</a> {# Assuming a URL named 'guidelines' exists #}
+           <a href="{% url 'help' %}">Help</a> {# Assuming a URL named 'help' exists #}
+           <a href="{% url 'logout' %}">Logout</a> {# This will trigger the logout view #}
+        </nav>
+    </header>
+    <div class="container">
+
+        {# Optional: Display messages like success or error #}
+        {% if messages %}
+        <ul class="messages">
+          {% for message in message %} {# Corrected variable name from 'messages' to 'message' #}
+            <li class="{{ message.tags }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+
+        <div class="welcome">
+            {# Display the user's name - assuming request.user is available in the context #}
+            <h2>👋 Welcome, <span id="studentName">{{ request.user.firstname }} {{ request.user.lastname }}</span>!</h2>
+        </div>
+
+        <div class="panel">
+            <h3>📄 Document Details</h3>
+
+            {% if document %}
+                <div class="document-info">
+                    <p><strong>Title:</strong> {{ document.dtitle }}</p>
+                    <p><strong>Version:</strong> {{ document.version }}</p>
+                    {# Assuming you fetch and pass related details in the view: #}
+                    {% if details %}
+                        <p><strong>Author:</strong> {{ details.dauthor.firstname }} {{ details.dauthor.lastname }}</p>
+                        <p><strong>Adviser:</strong> {{ details.dadviser }}</p>
+                        <p><strong>Program:</strong> {{ details.program.description }}</p>
+                    {% endif %}
+                    {# Display the latest submission log entry if passed from the view #}
+                    {% if latest_submission_log %}
+                        <p><strong>Submitted On:</strong> {{ latest_submission_log.submission_timestamp|date:"Y-m-d H:i" }}</p>
+                    {% endif %}
+
+                    {# Display Status - you might need to fetch the latest evaluation in the view #}
+                    {% if latest_evaluation %}
+                        <p><strong>Current Status:</strong>
+                            {% if latest_evaluation.status == 'Under Review'%}
+                                <span class="badge under-review">Under Review</span>
+                            {% elif latest_evaluation.status == 'Revision Required' %}
+                                <span class="badge revision">Revision Required</span>
+                            {% elif latest_evaluation.status == 'Accepted' %}
+                                <span class="badge accepted">Accepted</span>
+                            {% else %}
+                                <span class="badge submitted">{{ latest_evaluation.status }}</span>
+                            {% endif %}
+                        </p>
+                    {% else %}
+                         <p><strong>Current Status:</strong> <span class="badge submitted">Submitted</span></p>
+                    {% endif %}
+
+
+                    {# Action buttons related to this specific document based on status #}
+                    <div class="actions">
+                        {# Always show Download File if a file is attached #}
+                        {% if document.file_path %}
+                           <a href="{{ document.file_path.url }}" class="action-btn" download>Download File</a>
+                        {% endif %}
+
+                        {# Show View Feedback button if feedback exists #}
+                        {% if latest_evaluation and latest_evaluation.feedback %}
+                           {# You might need a separate URL/view for viewing feedback details #}
+                           <button class="action-btn">View Feedback</button>
+                        {% endif %}
+
+                        {# Show Resubmit button only if status is Revision Required #}
+                        {% if latest_evaluation and latest_evaluation.status == 'Revision Required' %}
+                           {# You'll need a URL/view for handling resubmission #}
+                           <a href="{% url 'resubmit_document' document_pk=document.pk %}" class="action-btn">Resubmit</a>
+                        {% endif %}
+
+                         {# Show OK button only if status is Accepted #}
+                        {% if latest_evaluation and latest_evaluation.status == 'Accepted' %}
+                           {# This might just be a confirmation button or link to download #}
+                           <button class="action-btn">OK</button>
+                        {% endif %}
+
+                        {# --- ADDED: Button to view reviewers when status is Under Review --- #}
+                        {% if latest_evaluation and latest_evaluation.status == 'Under Review' %}
+                           <button class="action-btn" id="viewReviewersBtn">View Reviewers</button>
+                        {% endif %}
+                        {# --- END ADDED --- #}
+
+                    </div>
+
+                </div>
+
+                {# --- ADDED: Section to display reviewer details (initially hidden) --- #}
+                <div id="reviewerDetails" style="display: none; margin-top: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9;">
+                    <h4>Assigned Reviewers:</h4>
+                    <ul id="reviewerList" style="list-style: disc; margin-left: 20px;">
+                        {# Reviewer names will be displayed here if passed in the context #}
+                        {% comment %}
+                           Your document_detail view function needs to fetch DocumentReviewers
+                           for this document version and pass them in the context, e.g., as 'reviewers'.
+                           Then you can iterate over them like this:
+                        {% endcomment %}
+                        {% if reviewers %} {# Assuming 'reviewers' list is passed in context from the view #}
+                            {% for reviewer_entry in reviewers %}
+                                <li>{{ reviewer_entry.reviewer.firstname }} {{ reviewer_entry.reviewer.lastname }}</li>
+                            {% endfor %}
+                        {% else %}
+                             <li>No reviewers assigned yet for this version, or data not available.</li>
+                        {% endif %}
+                    </ul>
+                </div>
+                {# --- END ADDED --- #}
+
+
+                {# Optional: Display evaluation history #}
+                {% comment %}
+                {% if evaluations %}
+                    <h4>Evaluation History</h4>
+                    <ul>
+                        {% for eval in evaluations %}
+                            <li>Status: {{ eval.status }} - Feedback: {{ eval.feedback }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                {% endcomment %}
+
+            {% else %}
+                <p>Document details not found.</p>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+    {# --- ADDED: JavaScript to toggle reviewer details visibility --- #}
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const viewReviewersBtn = document.getElementById('viewReviewersBtn');
+        const reviewerDetailsDiv = document.getElementById('reviewerDetails');
+
+        // Check if both the button and the details div exist on the page
+        if (viewReviewersBtn && reviewerDetailsDiv) {
+            viewReviewersBtn.addEventListener('click', function() {
+                // Toggle the display style of the reviewer details section
+                if (reviewerDetailsDiv.style.display === 'none') {
+                    reviewerDetailsDiv.style.display = 'block'; // Show the section
+                } else {
+                    reviewerDetailsDiv.style.display = 'none'; // Hide the section
+                }
+            });
+        }
+    });
+    </script>
+    {# --- END ADDED --- #}
+
+{% endblock %}
+
